@@ -1,0 +1,62 @@
+creating a google firebase database
+
+-navigate to console.firebase.google.com
+-Click on the add project
+-Write the project name
+-check all the boxes and then click on the create project.
+-Click continue.
+
+-if you click on the develop you will see=>>(
+Authentication
+
+Database
+
+Storage
+
+Hosting
+
+Functions and
+
+ML kit)
+
+-start with the project settings…
+-click on the service accounts…
+-click on the database secrets…
+-click show and copy ….
+-then open the program and paste this in the firebase authentication…
+
+
+firebase authentication…
+
+var admin = require("firebase-admin");
+
+var serviceAccount = require("path/to/serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+
+-now for the firebase host…click on the database…
+-select realtime database…
+-copy this link and paste it in the programming…
+- now we can click on the verify button to compile our program and check for any errors.
+
+
+{
+  "type": "service_account",
+  "project_id": "offensivearduinoelectro",
+  "private_key_id": "d66d21ec77f83ff84fe367ab1eb4003b9044f444",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCRRhJ4rCSp/3Py\ndVM3H8D8Q0ILTVJhRig+hsGuHwVLI3wy2IEut3PhZNUk+FSgvYG9H93EfcaMmolJ\nyt+mjY8ScuX6FrOI/Af5ltKKGE1Eu+5GR5usarsKgqh5d/CzvPxi1xapWMEMUE19\nBwUFjg3CX0ty3Qsiw/5LEYRqC1NkOHkh/uG8xlAMD3o8HyYlEiVTIf3CIJALugvg\nXzHWW7iDMYjmCLP8tc7VDE03jRzMyDdx3ZnbJanZeSPr0niJkaN0OYPfdNDoXeO+\nqii+kPCxhqu5rh3mgPNjwxBh0uAlIwwjGWUehHnfM4YnnLyj5nvTUm4Za5LP0gMQ\nkU39rbjFAgMBAAECggEAA67grB79nE8V6wTbXM3ALpblDm2h3ptCvtTbWuGorc86\nD4uBqvI193YNbq8vwof2HsS3ZDXtBL+QCiqvPcw0+7qJH+VlqvpP7eSvAyVJQDik\nbE+5WKrUEAqZUm6eeoj+EY06BoX/+aLVyW7PBDqXw5mTy3O4jaqlh5vrpCyiOUf+\nI6lMFfez+b/1+BZwQOYywXy9XutyZWJUjbEfKsAOLGboe3CvrA2zeuO4GmymgNln\nY4Z89HEDQyBDdLVHw7aOM7ikYScRnWWAGTs6mvp9b3JTwYf9v7MEQjguc+q+Qlyh\n4pUKajMETXRh8ta+W3fmsH1YGZYFGEMXsR9+D8yeOQKBgQDGXx6dVw+lm862Yy15\nUUz4u0ETH2d5QrFv56E1BgI1kkNRhnJIZKhLC0ZDMga40iaGwyqhrXcxPKqN9nSf\n0UxpgaEqXdVu4A3a8myKYsEQ3ujvvzCy9XBxyIhaK+HIUXe+aV3GmFHQzz87+Dxd\nFdHFnz51a+/PFLh2tguS9pdMuwKBgQC7ehHH0IkRrtDzov14ELabiiiDfmg4hNsd\nu0QRyZZqhveqs/Em1QZuTFhS0wtU/cL3pvru0zqV97bfJbNNFGzI4l9/nGnaV76z\ntJ39iyG+LRxD26VZDGfaz+w8lLwQo0F4GL0TJ4OFwilzfmUEPjKCTm+1MAQH7KXl\n9NLBZwV4fwKBgB+K/n48WsOVq9/6kz+IOvoOJIHa64Qvo7FMnqikxPMpx8SN4Vw7\njTsplsmWidUXrYKeRAgjYiGVKPWb692B1WmtcCghdY/E1s8q3zF+FH8PQvDkcOTz\n/CZLocrc0XEd6zF+5advjwrp+X8asNaIYqvO74qSWDaQb+iId/ytc0+DAoGBALZW\n0oZR946gRZBBHV+yebir1h2WS011QhwXr+vQ8h/n52g6nThUhm2uiVT8+I+QRBlU\nacjw3pFPnahJZat5SxjSu2lFOtrm7o6gA+2+bXInM894CMikPTpfcfe1/Xf9IMbq\n4LKJgu0MW/59l0haKgv8t7801SbT7sLKrFT4mySHAoGALsdwm0Qax2lrOu5rWeb0\nzKLPtcvG+zBSeJ5gpD8Ezpc0JnmfJD7IGbCP+wuqXpz74TN3T/L6yrxdZhV3V5U4\n5plW8oZfUITdSkT8N04vbZ0RmAdpBOX4Vjdg8sz2vTQW8AwtrJgDLfJLmTsB022m\nRp9vQhXPSjNNFZ0/QUOfvwk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-8g5ml@offensivearduinoelectro.iam.gserviceaccount.com",
+  "client_id": "100001938408789999381",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-8g5ml%40offensivearduinoelectro.iam.gserviceaccount.com"
+}
+
+firebase db link https://offensivearduinoelectro-default-rtdb.firebaseio.com/
+
+
+
