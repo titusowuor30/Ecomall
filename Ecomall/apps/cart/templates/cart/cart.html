@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Cart | {% endblock %}
+
+{% block content %}
+<h1 class="title">Cart</h1>
+{% if cart %}
+<div class="box mb-6">
+    <div class="table">
+        <table class="table is-fullwidth is-striped">
+            <thead>
+            <th></th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th></th>
+            </thead>
+
+            <tbody>
+            {% for item in cart %}
+            <tr>
+                <td>
+                    <figure class="image is-64x64">
+                        <img src="{{ item.product.getImageURL }}">
+                    </figure>
+                </td>
+                <td>
+                    <a href="{% url 'product' item.product.category.slug item.product.slug %}">{{ item.product }}</a>
+                </td>
+                <td>
+                    {{ item.quantity }}
+
+                    <a href="?change_quantity={{ item.id }}&quantity=-1">-</a>
+                    <a href="?change_quantity={{ item.id }}&quantity=1">+</a>
+                </td>
+                <td>${{ item.total_price }}</td>
+                <td><a href="?remove_from_cart={{ item.id }}" class="delete">Remove</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+            <tfoot>
+            <tr>
+                <td></td>
+                <td><strong>Total cost</strong></td>
+                <td><strong>Total Item(s): {{ cart|length}}</strong></td>
+                <td colspan="2"><strong>${{ cart.get_total_cost }}</strong></td>
+            <tr>
+                <td></td>
+                <td><strong><a href="{% url 'payment' %}" class="btn btn-primary">Direct M-Pesa Pay</a></strong></td>
+                <td><strong><a href="{% url 'frontpage' %}" class="btn btn-primary">Continue Shoping</a></strong></td>
+                <td colspan="2"><strong><a href="{% url 'checkout' %}" class="btn btn-secondary">Continue to checkout</a></strong></td>
+            </tr>
+
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+{% else %}
+<p>You don't have any products in your cart!</p>
+{% endif %}
+{% endblock %}

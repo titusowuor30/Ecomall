@@ -1,0 +1,114 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Checkout | {% endblock %}
+
+{% block content %}
+<h1 class="title mb-6" style="margin-left:350px;">Check out form</h1>
+<h2 class="subtitle" style="margin-left:100px;">Contact information</h2>
+<div class="box">
+
+    <form method="post" action="." id="payment-form">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="notification is-danger">
+            {{ form.non_field_errors}}
+        </div>
+        {% endif %}
+
+        {% if form.errors %}
+        <div class="notification is-danger">
+            <ul>
+                {% for field in form %}
+                {% for error in field.errors %}
+                <li><strong>{{ field.label }}: </strong>{{ error }}</li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="columns">
+            <div class="column is-6">
+                <div class="field">
+                    <label>First name</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="first_name">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Last name</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="last_name">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>E-mail</label>
+
+                    <div class="control">
+                        <input class="input" type="email" name="email">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Phone</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="phone">
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-6">
+                <div class="field">
+                    <label>Address</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="address">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>Postal code</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="postal_code">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label>City/Town</label>
+
+                    <div class="control">
+                        <input class="input" type="text" name="city">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-block my-3">
+            {% for value,name in form.fields.payment_method.choices %}
+            <div class="custom-control custom-radio">
+                <input id="{{name}}" name="payment_method"  value="{{value}}" type="radio" class="custom-control-input">
+                <label class="custom-control-label" for="{{name}}">{{name}}</label>
+            </div>
+            {% endfor %}
+        </div>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="notification is-danger">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark mt-4 is-uppercase">Checkout</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
