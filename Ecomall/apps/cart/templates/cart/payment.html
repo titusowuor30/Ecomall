@@ -1,0 +1,126 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Cart | {% endblock %}
+
+{% block content %}
+<div class="box">
+    <h2 class="is-dark">Select Payment Method</h2>
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+  <button type="button" class="btn btn-primary" onclick="paymentMethod();">Mpesa</button>
+  <button type="button" class="btn btn-primary" onclick="paymentMethod();">Credit</button>
+  <button type="button" class="btn btn-primary" onclick="paymentMethod();">Paypal</button>
+</div>
+
+    <div class="box">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" value="mpesa" id="mpesa-check"
+                   onclick="paymentMethod();">
+            <label class="form-check-label" for="mpesa-check">
+                M-Pesa
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" value="credit-card"
+                   id="credit-card-check" onclick="paymentMethod();">
+            <label class="form-check-label" for="credit-card-check">
+                Credit
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" value="paypal" id="paypal-check"
+                   onclick="paymentMethod();">
+            <label class="form-check-label" for="paypal-check">
+                Paypal
+            </label>
+        </div>
+    </div>
+
+    <form action="{% url 'lipa_na_mpesa' %}" method="post" id="id_mpesa" class="mpesa">
+        <h2 class="my-4">M-Pesa Payment</h2>
+        {% csrf_token %}
+
+        <div class="field">
+            <label>Phone Number</label>
+
+            <div class="control">
+                <input type="text" name="phone" id="phone" value="+254" class="input">
+            </div>
+
+            <p class="help">Pleas enter a valid phone number!</p>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark is-uppercase">Submit Payment</button>
+            </div>
+        </div>
+    </form>
+
+    <form action="." method="post" id="id-credit-card" class="credit-card">
+        <h2 class="my-4">Credit card Payment</h2>
+        {% csrf_token %}
+
+        <div class="field">
+            <label>Phone Number</label>
+
+            <div class="control">
+                <input type="text" name="phone" id="number" value="+254" class="input">
+            </div>
+
+            <p class="help">Pleas enter a valid phone number!</p>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark is-uppercase">Submit Payment</button>
+            </div>
+        </div>
+    </form>
+
+    <form action="." method="post" id="id-paypal" class="paypal">
+        <h2 class="my-4">PaypalPayment</h2>
+        {% csrf_token %}
+
+        <div class="field">
+            <label>Phone Number</label>
+
+            <div class="control">
+                <input type="text" name="phone" id="pay" value="+254" class="input">
+            </div>
+
+            <p class="help">Pleas enter a valid phone number!</p>
+        </div>
+        <div class="field">
+            <div class="control">
+                <button class="button is-dark is-uppercase">Submit Payment</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    mpesa = document.getElementById("mpesa-check").value;
+credit-card = document.getElementById("credit-card-check").value;
+paypal = document.getElementById("paypal-check").value;
+mpesaBlock = document.getElementById("id-mpesa");
+credit-cardBlock = document.getElementById("id-credit-card");
+paypalBlock = document.getElementById("id-paypal");
+
+function paymentMethod(){
+	if(mpesa == "mpesa"){
+		credit-cardBlock.classList.remove("credit-card");
+		paypalBlock.classList.remove("paypal");
+	}
+	if(credit-card == "credit-card"){
+		mpesaBlock.classList.remove("mpesa");
+		paypalBlock.classList.remove("paypal");
+	}
+	if(paypal == "paypal"){
+		credit-cardBlock.classList.remove("credit-card");
+		mpesaBlock.classList.remove("paypal");
+	}
+}
+
+</script>
+{% endblock scripts %}

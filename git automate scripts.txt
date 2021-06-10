@@ -1,0 +1,21 @@
+echo "# alx-zero_day" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/titusowuor30/Ecomall.git
+git push -u origin 
+
+echo "# configure git basic info"
+
+git config --global user.name "titusowuor30"
+git config --global user.email titusowuor30@gmail.com
+
+echo "# configure editor"
+git config --global core.editor emacs
+
+echo "# configure default branch name"
+git config --global init.defaultBranch main
+
+echo "#show configurations list
+git config --list >> c:/git config.txt
