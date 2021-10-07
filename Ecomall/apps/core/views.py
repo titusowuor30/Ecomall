@@ -25,4 +25,4 @@ def user_register(request):
             user=form.save()
             login(request,user)
             messages.success(request,'user registration successfull!')
-            return redirect('home')
+            return redirect('frontpage')

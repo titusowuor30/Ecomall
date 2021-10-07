@@ -16,45 +16,25 @@
     <!-- Your custom styles (optional) -->
     <link href="{% static 'styles/css/style.min.css' %}" rel="stylesheet">
     <link href="{% static 'styles/main.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/styler.css' %}" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
     <script src="{% static 'scripts/main.js' %}"></script>
-    <style type="text/css">
-
-    html,
-    body,
-    header,
-    .carousel {
-      height: 60vh;
-    }
-
-    @media (max-width: 740px) {
-
-      html,
-      body,
-      header,
-      .carousel {
-        height: 100vh;
-      }
-    }
-
-    @media (min-width: 800px) and (max-width: 850px) {
-
-      html,
-      body,
-      header,
-      .carousel {
-        height: 100vh;
-      }
-    }
-
+<style type="text/css">
 @keyframes show-toast{
 0% {bottom -100%;}
 20% {bottom 50%;}
 80% {bottom 50%;}
 100% {bottom -100%;}
 }
-
 .notification .is-toast{
 position:fixed;
 bottom:100%;
@@ -68,97 +48,275 @@ border-top-right-radius: 50%;
 border-bottom-left-radius: 10%;
 border-bottom-right-radius: 80%;
 }
-
+ul{
+    list-style: none;
+}
+ol{
+    list-style: none;
+}
     </style>
 </head>
-<body>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="margin-top:0%;">
+    <!-- Left -->
+    <ul class="navbar-nav mr-auto">
+        {% if request.user.is_authenticated %}
+        <li class="nav-item active">
+            <a class="nav-link waves-effect" href="{% url 'vendor_admin' %}" style="color:blue;">GreenHub Vendor
+                <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="nav-item active">
+            <a class="nav-link waves-effect" href="{% url 'become_vendor' %}">Become a Vendor
+                <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
 
-<!-- Navbar -->
-<nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
-    <div class="container">
+    <!-- Right -->
+    <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item">
+            <a href="{% url 'cart' %}" class="nav-link waves-effect">
+                <span class="badge red z-depth-1 mr-1">{% if cart %}{{cart|length}}{% else %}0{% endif %}</span>
+                <i class="fas fa-shopping-cart"></i>
+                <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
+                <i class="fab fa-twitter"></i>
+            </a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a href="{% url 'logout' %}" class="nav-link">
+                <i class=""></i>Hello, <b><span style="color:pink;font-weight:bold;">{{request.user.username}}!</span></b>
+            </a>
+        </li>
 
-        <!-- Brand -->
-        <a class="navbar-brand waves-effect" href="{% url 'frontpage' %}">
-            <strong class="blue-text">Ecomall</strong>
-        </a>
+        <li class="nav-item">
+            <a href="{% url 'logout' %}" class="nav-link"
+               target="_blank">
+                <i class="" style="color:red;font-weight:bold;text-decoration:underline;">LogOut</i>
+            </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a href="{% url 'login' %}" class="nav-link">
+                <i class="" style="color:blue;font-weight:bold;text-decoration:underline;">LogIn</i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'register' %}" class="nav-link">
+                <i class="button" style="color:blue;font-weight:bold;">Sign Up</i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
 
-        <!-- Collapse -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <!-- Links -->
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <!-- Left -->
-            <ul class="navbar-nav mr-auto">
-                {% if request.user.is_authenticated %}
-                <li class="nav-item active">
-                    <a class="nav-link waves-effect" href="{% url 'vendor_admin' %}" style="color:blue;">Vendor-Admin
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                {% else %}
-                <li class="nav-item active">
-                    <a class="nav-link waves-effect" href="{% url 'become_vendor' %}">Become a Vendor
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                {% endif %}
-            </ul>
-
-            <!-- Right -->
-            <ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item">
-                    <a href="{% url 'cart' %}" class="nav-link waves-effect">
-                        <span class="badge red z-depth-1 mr-1">{% if cart %}{{cart|length}}{% else %}0{% endif %}</span>
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="clearfix d-none d-sm-inline-block"> Cart </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://www.facebook.com/mdbootstrap" class="nav-link waves-effect" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://twitter.com/MDBootstrap" class="nav-link waves-effect" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                </li>
-                {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                    <a href="{% url 'logout' %}" class="nav-link">
-                        <i class=""></i>Hello, <b><span style="color:pink;font-weight:bold;">{{request.user.username}}!</span></b>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{% url 'logout' %}" class="nav-link"
-                       target="_blank">
-                        <i class="" style="color:red;font-weight:bold;text-decoration:underline;">LogOut</i>
-                    </a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a href="{% url 'login' %}" class="nav-link">
-                        <i class="" style="color:blue;font-weight:bold;text-decoration:underline;">LogIn</i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'register' %}" class="nav-link border border-light rounded">
-                        <i class="button" style="color:blue;font-weight:bold;">Sign Up</i>
-                    </a>
-                </li>
-                {% endif %}
-            </ul>
-
+    <!-- SEARCH FORM -->
+    <form class="form-inline ml-3" action="{% url 'search' %}">
+      <div class="input-group input-group-sm">
+        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+        <div class="input-group-append">
+          <button class="btn btn-navbar" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
         </div>
+      </div>
+    </form>
 
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-comments"></i>
+          <span class="badge badge-danger navbar-badge">3</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Brad Diesel
+                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">Call me whenever you can...</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  John Pierce
+                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">I got your message bro</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <!-- Message Start -->
+            <div class="media">
+              <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <div class="media-body">
+                <h3 class="dropdown-item-title">
+                  Nora Silvester
+                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                </h3>
+                <p class="text-sm">The subject goes here</p>
+                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+              </div>
+            </div>
+            <!-- Message End -->
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+        </div>
+      </li>
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          <span class="badge badge-warning navbar-badge">15</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-header">15 Notifications</span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i> 4 new messages
+            <span class="float-right text-muted text-sm">3 mins</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-users mr-2"></i> 8 friend requests
+            <span class="float-right text-muted text-sm">12 hours</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-file mr-2"></i> 3 new reports
+            <span class="float-right text-muted text-sm">2 days</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button"><i
+            class="fas fa-th-large"></i></a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'frontpage' %}" class="brand-link">
+      <img src="{% static 'styles/logo.jpg' %}" alt="greenhub" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">Green HUb</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'styles/userimg.png' %}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">{{request.user.username}}</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item has-treeview menu-open">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Green Hub Home
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'frontpage' %}" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Home</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'vendor_admin' %}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vendor Admin</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'frontpage' %}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                All Categories
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
     </div>
-</nav>
-<!-- Navbar -->
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">GreenHub</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{% url 'frontpage' %}">Home</a></li>
+              <li class="breadcrumb-item active">GreenHub Home</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+
 <!-- messages-->
 <div class="mt-2 pt-2">
     {% if messages %}
@@ -173,74 +331,38 @@ border-bottom-right-radius: 80%;
     {% endif %}
 </div>
 <!-- messages-->
+    <div class="content" style="margin:2px;">
+        <div class="container-fluid">
     {% block content %}
     {% endblock %}
+    </div>
+    </div>
+</div>
 </div>
 <!--Footer-->
-<footer class="page-footer text-center font-small mt-4 wow fadeIn">
+<footer class="page-footer text-center" style="background-color: rgb(68, 68, 67);">
+    <div class="footer" style="background-color: rgb(68, 68, 67);">
+        <div class="abouts"><span>ABOUT US</span></br>
+        <span>greenhub.com is an online </br>marketing platform that have</br> forcused mainly on agriculture</br> by providing a wide range of</br> agricultural products </br>and tools aimed at ensuring </br>that a farmer can coexist </br>by depending on them only</br> in terms of provision of agricultural</br> necessities.</span>
+        </div>
+        <div class="conts"><span>CONTACTS</span></br>
+          <span>You can get us through our</br> following contacts</br> ghub@gmail.com</br>or .ghub@yahoo.com</br>you can also call us on .+254711555292 or 0734564786</br>you can also get us through social media platforms as follows; </span>
 
-    <!--Call to action-->
-    <div class="pt-4">
-        <a class="btn btn-outline-white" href="https://mdbootstrap.com/docs/jquery/getting-started/download/"
-           target="_blank"
-           role="button">Download MDB
-            <i class="fas fa-download ml-2"></i>
-        </a>
-        <a class="btn btn-outline-white" href="https://mdbootstrap.com/education/bootstrap/" target="_blank"
-           role="button">Start
-            free tutorial
-            <i class="fas fa-graduation-cap ml-2"></i>
-        </a>
-    </div>
-    <!--/.Call to action-->
+        </div>
+        <div class="help"><span><a name="#">HELP CENTER</a></span></br>
+          <span>If incase you need any help</br> in accessing our site you</br> can use the following help</br> procedures</br>To purchase just touch</br>or hover the add to cart point</span>
 
-    <hr class="my-4">
-
-    <!-- Social icons -->
-    <div class="pb-4">
-        <a href="https://www.facebook.com/mdbootstrap" target="_blank">
-            <i class="fab fa-facebook-f mr-3"></i>
-        </a>
-
-        <a href="https://twitter.com/MDBootstrap" target="_blank">
-            <i class="fab fa-twitter mr-3"></i>
-        </a>
-
-        <a href="https://www.youtube.com/watch?v=7MUISDJ5ZZ4" target="_blank">
-            <i class="fab fa-youtube mr-3"></i>
-        </a>
-
-        <a href="https://plus.google.com/u/0/b/107863090883699620484" target="_blank">
-            <i class="fab fa-google-plus-g mr-3"></i>
-        </a>
-
-        <a href="https://dribbble.com/mdbootstrap" target="_blank">
-            <i class="fab fa-dribbble mr-3"></i>
-        </a>
-
-        <a href="https://pinterest.com/mdbootstrap" target="_blank">
-            <i class="fab fa-pinterest mr-3"></i>
-        </a>
-
-        <a href="https://github.com/mdbootstrap/bootstrap-material-design" target="_blank">
-            <i class="fab fa-github mr-3"></i>
-        </a>
-
-        <a href="http://codepen.io/mdbootstrap/" target="_blank">
-            <i class="fab fa-codepen mr-3"></i>
-        </a>
-    </div>
-    <!-- Social icons -->
-
+        </div>
+        </div>
     <!--Copyright-->
     <div class="footer-copyright py-3">
-        © 2019 Copyright:
-        <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> MDBootstrap.com </a>
+        Made with ❤ by <a href="https://titusowuorportfolio.herokuapp.com" target="_blank" style="color: blue;text-decoration: underline;">TDBSoft </a>© 2021 Copyright:
     </div>
     <!--/.Copyright-->
 
 </footer>
 <!--/.Footer-->
+</div>
 
 <!-- SCRIPTS -->
 <!-- JQuery -->

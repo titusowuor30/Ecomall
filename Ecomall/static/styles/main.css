@@ -23,3 +23,6 @@ margin-bottom:0;
 .product-list-item .box .price{
 color:#888;
 }
+.ul ol{
+    list-style: none;
+}

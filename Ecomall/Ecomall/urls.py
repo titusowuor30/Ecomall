@@ -17,11 +17,19 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
+    # note the override comes before the admin URLs below
+    path('admin/logout/', lambda request: redirect('/logout/', permanent=False)),
     path('admin/', admin.site.urls),
     path('vendors/', include('apps.vendor.urls')),
     path('cart/', include('apps.cart.urls')),
     path('', include('apps.core.urls')),
     path('product/', include('apps.product.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns +=staticfiles_urlpatterns()
+
+admin.site.site_header  =  "GreenHub Administration"  
+admin.site.site_title  =  "GreenHub admin site"
+admin.site.index_title  =  "GreenHub Admin"

@@ -48,6 +48,8 @@ DEFAULT_EMAIL_FROM = 'Ecomall <noreply@ecomall.com>'
 # Application definition
 
 INSTALLED_APPS = [
+     'adminlte3',
+    'adminlte3_theme',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -146,5 +148,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
+STATIC_ROOT=BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
